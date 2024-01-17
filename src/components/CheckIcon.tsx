@@ -1,4 +1,4 @@
-export default function CheckIcon (props) {
+export default function CheckIcon (props:any) {
    return (
     <svg
       aria-hidden="true"

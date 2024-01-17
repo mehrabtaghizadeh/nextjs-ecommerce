@@ -23,7 +23,7 @@ const checkbox = tv({
   }
 })
 
-export const CustomCheckbox = (props) => {
+export const CustomCheckbox = (props:any) => {
   const {
     children,
     isSelected,
