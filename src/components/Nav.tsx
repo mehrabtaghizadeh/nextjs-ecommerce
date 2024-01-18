@@ -11,7 +11,7 @@ import { UserContext } from "@/context/AuthContext";
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-      const {user} = useContext(UserContext)
+      const {user} = useContext(UserContext) as {user : any}
   // Selecting cart from global state
 const cart = useSelector((state:any) => state.cart);
 
