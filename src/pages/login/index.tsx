@@ -11,7 +11,7 @@ import { useState , useContext } from "react";
 import { UserContext } from "@/context/AuthContext";
 
  function index() {
-    const {setUser,setUserId} = useContext(UserContext)
+    const {setUser,setUserId} = useContext(UserContext) as { setUserId: any , setUser: any }
     const router = useRouter()        
     const [loading, setLoading] = useState(false)
     const schema = yup.object().shape({

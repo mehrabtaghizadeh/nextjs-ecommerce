@@ -74,7 +74,7 @@ function index() {
                       </button>
                       <input
                         type="number"
-                        className="w-12 px-2 py-4 text-center border-0 rounded-md  bg-gray-50  md:text-right"
+                        className="w-12 px-2 py-4 text-center border-none rounded-md"
                         value={item.quantity}
                       />
                       <button className="py-2 hover:text-gray-700 " onClick={() => dispatch(incrementQuantity(item.id))}>

@@ -14,10 +14,10 @@ import { cat } from "@/types/types";
 import { numberToWords } from "@persian-tools/persian-tools";
 function index({products,categories}:any) { 
    const [open, setOpen] = useState(false);
-   const [category,setCategory] = useState()
-   const [minPrice, setMinPrice] = useState();
-   const [maxPrice, setMaxPrice] = useState();
-   const [filteredProducts, setFilteredProducts] = useState([]);
+   const [category,setCategory] = useState<string>('')
+   const [minPrice, setMinPrice] = useState<string>('');
+   const [maxPrice, setMaxPrice] = useState<string>('');
+   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
 
   useEffect(() => {
     // اعمال فیلترها هنگامی که تغییری در دسته‌بندی یا بازه قیمت‌ها اتفاق می‌افتد

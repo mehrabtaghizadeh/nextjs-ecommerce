@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import Link from "next/link"
+import BASE_URL from "@/utils/BASE_URL";
 function index() {
          const router = useRouter()        
          const [loading, setLoading] = useState(false)
@@ -15,16 +16,16 @@ function index() {
           username: yup.string().required('نام کاربری الزامی است'),
           email: yup.string().email('ایمیل معتبر نیست').required('ایمیل الزامی است'),
           password: yup.string().min(6, 'رمز عبور باید حداقل 6 کاراکتر باشد').required('رمز عبور الزامی است'),
-          confirm: yup.string().oneOf([yup.ref('password'), null], 'رمز عبور همخوانی ندارد'),
+          confirm: yup.string().oneOf([yup.ref('password'), ''], 'رمز عبور همخوانی ندارد')
         });
 
         const { register, handleSubmit, formState: { errors } } = useForm({
             resolver: yupResolver(schema),
         });
       
-        const onSubmit = (data) => {
+        const onSubmit = (data:any) => {
                setLoading(true)
-              fetch('http://localhost:4000/api/v1/auth/register',{
+              fetch(`${BASE_URL}/auth/register`,{
                 headers:{'Content-Type': 'application/json'}
                 ,method: 'POST',
                 body: JSON.stringify(data)
@@ -67,7 +68,8 @@ function index() {
                     </div>
                     <div>
                         <label className="text-gray-600 mb-2 block">ایمیل</label>
-                        <input type="email" name="email" id="email"
+                        <input 
+                           type="email" id="email"
                             {...register('email')}
                             className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="youremail.@domain.com"/>

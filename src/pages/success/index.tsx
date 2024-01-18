@@ -7,11 +7,12 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaTimesCircle } from "react-icons/fa";
 import Link from "next/link";
+import { boolean } from "yup";
 
 function index() {
 
    const router = useRouter()
-   const [statusPaid,setStatusPaid] = useState(null)
+   const [statusPaid,setStatusPaid] = useState<boolean | null>(null)
    const { Status } = router.query
    useEffect(()=>{
      if(Status === 'OK'){

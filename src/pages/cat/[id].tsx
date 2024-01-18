@@ -30,7 +30,7 @@ function index({Catproduct}:any) {
 
 export default index
 
-export async function getServerSideProps(cxt) {
+export async function getServerSideProps(cxt:any) {
   // Fetch data from an API
   const {id} = cxt.query
   const res = await fetch(`${BASE_URL}/cat/catPage?category=${id}`); 

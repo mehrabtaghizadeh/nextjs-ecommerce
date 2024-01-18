@@ -7,17 +7,13 @@ import { order, CheckoutItem } from "@/types/types"
 
 function index() {
    const [orders,setOrders] = useState([])
-   const {userId} = useContext(UserContext)
+   const {userId} = useContext(UserContext) as {userId: string}
    useEffect(()=>{
     fetch(`${BASE_URL}/auth/user/${userId}`).then(response => response.json())
     .then(data => setOrders(data.orders))
   },[userId])
       
-      useEffect(() => {
-        if(orders.length < 0){
-          return <p className="mr-8">شما هیچ خریدی نکرده اید!</p>
-        }
-      },[orders])
+
   return (
     <div>
       <Nav/>

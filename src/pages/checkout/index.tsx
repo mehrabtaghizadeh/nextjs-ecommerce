@@ -12,15 +12,15 @@ import BASE_URL from "@/utils/BASE_URL";
 
 function index() {
 
-    const [fullName,setFullName] = useState()
+    const [fullName,setFullName] = useState<string>('')
     const [lineItems,setLineItems] = useState()
-    const [city,setCity] = useState()
-    const [amount,setAmount] = useState()
-    const [email,setEmail] = useState()
-    const [phoneNumber,setPhoneNumber] = useState()
-    const [postalCode,setPostalCode] = useState()
-    const [streetAddress,setStreetAddress] = useState("")
-    const {userId} = useContext(UserContext)
+    const [city,setCity] = useState<string>('')
+    const [amount,setAmount] = useState<string>('')
+    const [email,setEmail] = useState<string>('')
+    const [phoneNumber,setPhoneNumber] = useState<string>('')
+    const [postalCode,setPostalCode] = useState<string>('')
+    const [streetAddress,setStreetAddress] = useState<string>('')
+    const {userId} = useContext(UserContext) as { userId: string }
     const cart = useSelector((state:any) => state.cart);
     const getTotalPrice = () => {
         return cart.reduce(

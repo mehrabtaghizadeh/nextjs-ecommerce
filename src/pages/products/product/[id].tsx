@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer"
 import Nav from "@/components/Nav"
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/cart.slice'
 import { useState } from "react";
 import {CheckboxGroup} from "@nextui-org/react";
@@ -10,13 +10,19 @@ import Link from "next/link"
 import { MdArrowBackIos } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { product, properties } from "@/types/types";
-function index({product}) {
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
-    const [groupSelected, setGroupSelected] = useState([]);
+function index({product}:any) {
+
+    const [groupSelected, setGroupSelected] = useState('');
 
     const dispatch = useDispatch();
-    const cart = useSelector((state) => state.cart);
-    const mainImg = product?.map((pro) => pro.images[0].map((image) => {return image.url}))
+    // const cart = useSelector((state:any) => state.cart);
+    const mainImg = product?.map((pro:any) => pro.images[0].map((image:any) => {return image.url}))
     const [activeImage , setActiveImage] = useState(mainImg)
     
     // Getting the count of items
@@ -101,16 +107,36 @@ function index({product}) {
                             <div>
                                 <div>
                                     <div className="flex gap-2 p-5">
-                                    <CheckboxGroup
+                                    
+
+
+
+                                    <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">رنگ ها</FormLabel>
+      <RadioGroup
+        row
+        value={groupSelected}
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={e => setGroupSelected(e.target.value)}
+      >
+        {pro.values.map((value: any[]) => value.map((v: any) => (
+        <FormControlLabel value={v} control={<Radio />} label={v} />
+         )))}
+
+      </RadioGroup>
+    </FormControl>
+                                    {/* <CheckboxGroup
                                        className="gap-1"
                                        orientation="horizontal"
                                        value={groupSelected}
-                                       onChange={setGroupSelected}
+                                    //    onChange={(e: FormEventHandler<HTMLDivElement> | ((value: string[]) => void)) => setGroupSelected(e as string[])}
+                                    //    onChange={setGroupSelected}
                                      >
                                  {pro.values.map((value: any[]) => value.map((v: any) => (
-                                   <CustomCheckbox value={v}>{v}</CustomCheckbox>
+                                   <CustomCheckbox onChange={setGroupSelected} value={v}>{v}</CustomCheckbox>
                                  )))}
-                                 </CheckboxGroup>
+                                 </CheckboxGroup> */}
                                  </div>
                                  </div>
 
