@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState , useContext } from "react";
 import { UserContext } from "@/context/AuthContext";
+import BASE_URL from "@/utils/BASE_URL";
 
  function index() {
     const {setUser,setUserId} = useContext(UserContext) as { setUserId: any , setUser: any }
@@ -25,7 +26,7 @@ import { UserContext } from "@/context/AuthContext";
  
    const onSubmit = (data: any) => {
           setLoading(true)
-         fetch('http://localhost:4000/api/v1/auth/login',{
+         fetch(`${BASE_URL}/auth/login`,{
            headers:{'Content-Type': 'application/json'}
            ,method: 'POST',
            credentials:'include',

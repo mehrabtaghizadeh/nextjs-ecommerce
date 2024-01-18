@@ -12,12 +12,13 @@ import { FiArrowDownLeft } from "react-icons/fi";
 import { BiSort } from "react-icons/bi";
 import { cat } from "@/types/types";
 import { numberToWords } from "@persian-tools/persian-tools";
+import BASE_URL from "@/utils/BASE_URL";
 function index({products,categories}:any) { 
    const [open, setOpen] = useState(false);
    const [category,setCategory] = useState<string>('')
-   const [minPrice, setMinPrice] = useState<string>('');
-   const [maxPrice, setMaxPrice] = useState<string>('');
-   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+   const [minPrice, setMinPrice] = useState<string>();
+   const [maxPrice, setMaxPrice] = useState<string>();
+   const [filteredProducts, setFilteredProducts] = useState<any>([]);
 
   useEffect(() => {
     // اعمال فیلترها هنگامی که تغییری در دسته‌بندی یا بازه قیمت‌ها اتفاق می‌افتد
@@ -118,13 +119,13 @@ function index({products,categories}:any) {
                 <div>
                     <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">دسته بندی ها</h3>
                     <div className="space-y-2">
-                        {categories.map((category:cat) => (
+                        {categories.map((cate:cat) => (
                         <div className="flex items-center">
                             <input type="checkbox"
-                            value={category.name}
+                            value={cate?.name}
                             onChange={e => setCategory(e.target.value)}
                             className="text-primary focus:ring-0 rounded-sm cursor-pointer"/>
-                            <label className="text-gray-600 ml-3 mr-2 cusror-pointer">{category.name}</label>
+                            <label className="text-gray-600 ml-3 mr-2 cusror-pointer">{cate?.name}</label>
                         </div>
                         ))}
 
@@ -173,7 +174,7 @@ function index({products,categories}:any) {
             </div>
 
             <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
-            {filteredProducts.map(product => (
+            {filteredProducts.map((product:any) => (
               <Card product={product}/>
          ))}            
          </div>
@@ -194,9 +195,9 @@ export default index
 
 export async function getServerSideProps(cxt:any) {
     // Fetch data from an API
-    const res = await fetch('http://localhost:4000/api/v1/products/all');
+    const res = await fetch(`${BASE_URL}/products/all`);
     const products = await res.json()
-    const resp = await fetch('http://localhost:4000/api/v1/cat/all');
+    const resp = await fetch(`${BASE_URL}/cat/all`);
     const categories = await resp.json()
     // Return the data as props
     return {

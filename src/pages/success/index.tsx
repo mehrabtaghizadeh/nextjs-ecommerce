@@ -7,7 +7,6 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaTimesCircle } from "react-icons/fa";
 import Link from "next/link";
-import { boolean } from "yup";
 
 function index() {
 

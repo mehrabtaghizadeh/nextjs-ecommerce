@@ -15,6 +15,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import BASE_URL from "@/utils/BASE_URL";
 
 function index({product}:any) {
 
@@ -168,7 +169,7 @@ export default index
 export async function getServerSideProps(cxt: { query: { id: any } }) {
     // Fetch data from an API
     const {id} = cxt.query
-    const rse = await fetch(`http://localhost:4000/api/v1/products/one/${id}`);
+    const rse = await fetch(`${BASE_URL}/products/one/${id}`);
      const product = await rse.json()
      console.log(product)
      return {

@@ -38,12 +38,12 @@ const getItemsCount = () => {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="/">
+          <Link href="/">
             خانه
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="/products">
+          <Link  href="/products">
             فروشگاه
           </Link>
         </NavbarItem>
