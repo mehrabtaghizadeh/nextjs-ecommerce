@@ -36,7 +36,7 @@ const getItemsCount = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-8" justify="center">
         <NavbarItem>
           <Link href="/">
             خانه
@@ -48,11 +48,11 @@ const getItemsCount = () => {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent className="mx-3" justify="end">
         <NavbarItem className="flex">
           <Link href="/cart">
-            <Badge content={getItemsCount()} className="mt-1">
-             <GrBasket className="h-6 w-6 text-rose-500"/>
+            <Badge content={getItemsCount()} className="mt-2">
+             <GrBasket className="h-6 w-6 mt-2 text-rose-500"/>
              </Badge>
           </Link>
         </NavbarItem>

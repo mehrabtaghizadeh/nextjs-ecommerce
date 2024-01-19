@@ -5,50 +5,94 @@ import Link from "next/link"
 import { MdArrowBackIos } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import _ from "lodash";
-import { useState , useEffect } from "react";
+import { useState , useEffect, useCallback } from "react";
 import { GoArrowUpRight } from "react-icons/go";
-import {Drawer,Button}  from "@mui/material"
+import {Drawer}  from "@mui/material"
 import { FiArrowDownLeft } from "react-icons/fi";
 import { BiSort } from "react-icons/bi";
 import { cat } from "@/types/types";
 import { numberToWords } from "@persian-tools/persian-tools";
 import BASE_URL from "@/utils/BASE_URL";
+import Head from "next/head";
+
 function index({products,categories}:any) { 
    const [open, setOpen] = useState(false);
    const [category,setCategory] = useState<string>('')
-   const [minPrice, setMinPrice] = useState<string>();
-   const [maxPrice, setMaxPrice] = useState<string>();
+   const [minPrice, setMinPrice] = useState<string>('');
+   const [maxPrice, setMaxPrice] = useState<string>('');
    const [filteredProducts, setFilteredProducts] = useState<any>([]);
 
-  useEffect(() => {
+   useEffect(() => {
     // اعمال فیلترها هنگامی که تغییری در دسته‌بندی یا بازه قیمت‌ها اتفاق می‌افتد
     let filtered = _.filter(products, (product) => {
-      let categoryFilter = !category || product.category?.name === category;
+      const hasCategory = product.category && product.category.name;
+      const categoryFilter = !category || (hasCategory && hasCategory === category);
       const priceFilter =
-        (!minPrice || product.price >= parseInt(minPrice)) &&
-        (!maxPrice || product.price <= parseInt(maxPrice));
-      return categoryFilter && priceFilter;
+        (!minPrice || product.price >= +minPrice) &&
+        (!maxPrice || product.price <= +maxPrice);
+      
+      // افزودن شرط بررسی عدم انتخاب دسته‌بندی
+      const noCategoryFilter = !category && !hasCategory;
+
+      return (categoryFilter || noCategoryFilter) && priceFilter;
     });
+  
     if (minPrice || maxPrice) {
-        filtered = _.orderBy(filtered, ["price"], ["asc"]);
-      }
-    
+      filtered = _.orderBy(filtered, ["price"], ["asc"]);
+    }
+  
     setFilteredProducts(filtered);
   }, [category, minPrice, maxPrice, products]);
-  const sortAsc = () => {
+  
+  const sortAsc = useCallback(() => {
     const sortedProducts = _.orderBy(filteredProducts, ["price"], ["asc"]);
     setFilteredProducts(sortedProducts);
-  };
+  }, [filteredProducts]);
 
-  const sortDesc = () => {
+  const sortDesc = useCallback(() => {
     const sortedProducts = _.orderBy(filteredProducts, ["price"], ["desc"]);
     setFilteredProducts(sortedProducts);
-  };
+  }, [filteredProducts]);
+  
   return (
     <>
+        <Head>
+        <title>فروشگاه مبلمان | محصولات با کیفیت با قیمت مناسب</title>
+        <meta
+          name="description"
+          content="خرید آنلاین مبلمان با کیفیت و طراحی‌های مدرن. دسته بندی بر اساس نیازهای شما. قیمت مناسب و ارسال به سراسر ایران."
+        />
+        <meta name="keywords" content="مبلمان، خرید آنلاین، دسته بندی مبلمان، قیمت مبلمان" />
+        <meta name="author" content="نام نویسنده یا نام شرکت" />
+
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content="فروشگاه مبلمان | محصولات با کیفیت با قیمت مناسب" />
+        <meta
+          property="og:description"
+          content="خرید آنلاین مبلمان با کیفیت و طراحی‌های مدرن. دسته بندی بر اساس نیازهای شما. قیمت مناسب و ارسال به سراسر ایران."
+        />
+        <meta property="og:image" content="آدرس تصویر اشتراک‌گذاری" />
+        <meta property="og:url" content="آدرس صفحه" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="فروشگاه مبلمان | محصولات با کیفیت با قیمت مناسب"
+        />
+        <meta
+          name="twitter:description"
+          content="خرید آنلاین مبلمان با کیفیت و طراحی‌های مدرن. دسته بندی بر اساس نیازهای شما. قیمت مناسب و ارسال به سراسر ایران."
+        />
+        <meta name="twitter:image" content="آدرس تصویر توییتر" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href="آدرس صفحه" />
+      </Head>
      <Nav/>
      {/* <!-- breadcrumb --> */}
-    <div className="container py-4 flex items-center gap-3">
+    <div className="container py-4 flex items-center gap-2">
         <Link href="/" className="text-primary text-base">
         <AiFillHome />
         </Link>
@@ -61,11 +105,11 @@ function index({products,categories}:any) {
     {/* <!-- ./breadcrumb --> */}
 
     {/* <!-- shop wrapper --> */}
-    <div className="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
+    <div className="container flex justify-between gap-4">
         {/* <!-- sidebar --> */}
         {/* <!-- drawer init and toggle --> */}
 
-        <Button onClick={() => setOpen(true)} className="hidden w-fit text-blue-500 max-md:flex"><BiSort /></Button>
+        <button onClick={() => setOpen(true)} className="hidden h-fit top-0 w-fit items-start text-blue-500 max-md:flex"><BiSort /></button>
   {/* <!-- drawer component --> */}
       <Drawer open={open} anchor={"right"} onClose={() => setOpen(false)}>
       <div className="px-4 pb-6 shadow rounded  md:block">
@@ -114,7 +158,7 @@ function index({products,categories}:any) {
 
 
         {/* <!-- ./sidebar --> */}
-        <div className="col-span-1 bg-white px-4 pb-6 shadow rounded overflow-hiddenb hidden md:block">
+        <div className="bg-white px-4 h-fit pb-6 shadow rounded overflow-hidden hidden md:block">
             <div className="divide-y divide-gray-200 space-y-5">
                 <div>
                     <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">دسته بندی ها</h3>
@@ -158,7 +202,7 @@ function index({products,categories}:any) {
             </div>
         </div>
         {/* <!-- products --> */}
-        <div className="col-span-3 max-md:col-span-2 max-sm:col-span-1">
+        <div className="col-span-3 max-lg:col-span-2 max-md:col-span-2 max-sm:col-span-1">
             <div className="flex items-center mb-4 gap-2">
 
                     <button className="text-sm p-2 flex gap-1 items-center rounded border border-gray-200" onClick={()=> sortAsc()}>
@@ -173,9 +217,11 @@ function index({products,categories}:any) {
 
             </div>
 
-            <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
-            {filteredProducts.map((product:any) => (
-              <Card product={product}/>
+            <div className="grid grid-cols-3 max-lg:gap-4 max-sm:grid-cols-1 max-lg:grid-cols-3 max-md:grid-cols-2 gap-6">
+            {filteredProducts?.map((product:any) => (
+              <div>
+                <Card product={product}/>
+              </div>
          ))}            
          </div>
         </div>

@@ -4,9 +4,16 @@ import Nav from '@/components/Nav'
 import BASE_URL from '@/utils/BASE_URL';
 import { cat } from '@/types/types';
 import Link from 'next/link';
+import Head from 'next/head';
 export default function Home({products , categories}:any) {
   return (
  <>
+ <Head>
+  <title>شاپلند</title>
+  <meta name="description" content="خانه خود را به دنیایی از زیبایی و راحتی تبدیل کنید. مبلمان با کیفیت، ارسال به سراسر ایران و خرید مستقیم از کارخانه. انتخاب از بین متنوع‌ترین رنگ‌ها و پارچه‌ها." />
+  <meta name="keywords" content="مبلمان، خانه، راحتی" />
+  <meta name="author" content="محراب تقی زاده" />
+</Head>
   <Nav/>
   {/* <!-- banner --> */}
     <div className="bg-cover object-cover m-0 bg-no-repeat bg-center py-36 bg-[url('/images/banner-bg.jpg')]">
@@ -89,9 +96,12 @@ export default function Home({products , categories}:any) {
     {/* <!-- product --> */}
     <div className="container pb-16">
         <h2 className="text-2xl font-bold sepahbod text-gray-700 mb-6">جدید ترین محصولات</h2>
-        <div className="grid gap-3 grid-cols-4 max-lg:grid-col-3 max-md:grid-col-2 max-sm:grid-col-1">
+        <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:gap-4 max-sm:grid-cols-1 max-lg:grid-cols-3 max-md:grid-cols-2 gap-6">
+
          {products?.map((product:any) => (
-             <Card product={product}/>
+            <div>
+            <Card product={product}/>
+            </div>
              ))}
             
         </div>

@@ -17,11 +17,13 @@ function index() {
   return (
     <div>
       <Nav/>
+     <div className="max-h-screen">
+
        <h1 className="p-4 text-xl font-bold mr-8">صفحه سفارش‌های من</h1>
  
 
- {orders?.map((order:order) => (<div key={order._id} className="p-3 m-8 border rounded-md sm:p-6 border-gray-300">
-   <div className="flex gap-2">
+ {orders ? orders.map((order:order) => (<div key={order._id} className="p-3 m-8 border rounded-md sm:p-6 border-gray-300">
+   <div className="flex max-sm:flex-col gap-2">
       {order.lineItems.map((item:CheckoutItem) => (
         <div className="flex flex-col gap-3">
         <div>
@@ -32,7 +34,7 @@ function index() {
         </div>
       ))}
       </div>
-   <div className=" flex flex-row gap-3">
+   <div className="flex flex-row max-md:flex-col gap-3">
     <p>
     {order.fullName}
     </p>
@@ -127,7 +129,8 @@ function index() {
 </ul>  
   
  </div> 
-  ))}
+  )) : <p className="flex justify-center items-center mx-auto mt-5">شما هیچ خریدی نکرده اید</p>}
+        </div>
     <Footer/>
     </div>
   )  
