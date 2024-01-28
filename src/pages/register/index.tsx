@@ -9,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import Link from "next/link"
 import BASE_URL from "@/utils/BASE_URL";
+import { BarLoader } from "react-spinners"
+
+
 function index() {
          const router = useRouter()        
          const [loading, setLoading] = useState(false)
@@ -96,11 +99,11 @@ function index() {
                 </div>
                 <div className="mt-4">
                     <button type="submit"
-                        className="block w-full py-2 text-center
-                         text-white bg-primary border border-primary 
-                         rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto 
-                         font-medium">
-                        ثبت نام
+                        disabled={loading ? true : false}
+                        className="w-full flex justify-center items-center py-2 text-center
+                        text-white bg-primary disabled:bg-slate-400 disabled:opacity-65
+                        rounded transition">
+                        {loading  ? <div className="flex h-10 mx-auto w-full justify-center items-center "> <BarLoader color="#ffffff"/> </div>: "ثبت نام"}
                         </button>
                 </div>
             </form>

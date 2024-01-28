@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState , useContext } from "react";
 import { UserContext } from "@/context/AuthContext";
 import BASE_URL from "@/utils/BASE_URL";
+import { BarLoader } from "react-spinners"
 
  function index() {
     const {setUser,setUserId} = useContext(UserContext) as { setUserId: any , setUser: any }
@@ -25,18 +26,18 @@ import BASE_URL from "@/utils/BASE_URL";
    });
  
    const onSubmit = (data: any) => {
-          setLoading(true)
+         setLoading(true)
          fetch(`${BASE_URL}/auth/login`,{
            headers:{'Content-Type': 'application/json'}
            ,method: 'POST',
            credentials:'include',
            body: JSON.stringify(data)
          }).then((res) => res.json()).then((data) =>{
-           if(data.success){
+             if(data.success){
             setUser(data.user.username)
             setUserId(data.user._id)
-            setLoading(false)
             toast.success('با موفقیت ثبت وارد شدید')
+            setLoading(false)
             router.push('/')
            }
        }).catch(() => (
@@ -50,7 +51,6 @@ import BASE_URL from "@/utils/BASE_URL";
      <Nav/>
      {/* <!-- login --> */}
    <ToastContainer />
-   {loading  && toast.loading("در حال ارسال ...")}
     <div className="contain py-16">
         <div className="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
             <h2 className="text-2xl sepahbod uppercase font-medium mb-1">ورود</h2>
@@ -63,9 +63,9 @@ import BASE_URL from "@/utils/BASE_URL";
                         <label  className="text-gray-600 mb-2 block">ایمیل</label>
                         <input
                                 {...register('email')}
-                            type="email" name="email" id="email"
-                            className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                            placeholder="youremail.@domain.com"/>
+                                type="email" name="email" id="email"
+                                className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+                                placeholder="youremail.@domain.com"/>
                     </div>
                     <div>
                         <label  className="text-gray-600 mb-2 block">رمز عبور</label>
@@ -79,9 +79,13 @@ import BASE_URL from "@/utils/BASE_URL";
                 </div>
 
                 <div className="mt-4">
-                    <button type="submit"
-                     className="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition
-                      uppercase font-roboto font-medium">ورود</button>
+                <button type="submit"
+                        disabled={loading ? true : false}
+                        className="w-full flex justify-center items-center py-2 text-center
+                         text-white bg-primary disabled:bg-slate-400 disabled:opacity-65
+                         rounded transition">
+                        {loading ? <div className="flex h-10 mx-auto w-full justify-center items-center "> <BarLoader color="#ffffff"/> </div>: "ورود"}
+                        </button>
                 </div>
             </form>
 

@@ -21,7 +21,6 @@ function index({ product }: any) {
   const [groupSelected, setGroupSelected] = useState("");
 
   const dispatch = useDispatch();
-  // const cart = useSelector((state:any) => state.cart);
   const mainImg = product?.map((pro: any) =>
     pro.images[0].map((image: any) => {
       return image.url;

@@ -18,10 +18,10 @@ export default function Home({products , categories}:any) {
   {/* <!-- banner --> */}
     <div className="bg-cover object-cover m-0 bg-no-repeat bg-center py-36 bg-[url('/images/banner-bg.jpg')]">
         <div className="container">
-            <h1 className="text-6xl sepahbod max-lg:text-4xl max-md:text-3xl max-sm:text-2xl text-gray-700 text-left mb-4 capitalize">
+            <h1 className="text-6xl ml-4 sepahbod max-lg:text-4xl max-md:text-3xl max-sm:text-2xl text-gray-700 text-left mb-4 capitalize">
             شیک و راحت بودن <br /> در یکجا
             </h1>
-            <p className='text-left font-bold'>
+            <p className='text-left ml-4 font-bold'>
             کیفیتی که خانه‌تان را تغییر می‌دهد، طراحی که به راحتی دلپذیر می‌شود، تنوعی که هر سلیقه‌ای را جذب می‌کند. <br /> خانه شما، با مبلمان ما، به دنیایی از راحتی و شکوه تبدیل می‌شود
             </p>
                 <p className='mt-12 text-left'>

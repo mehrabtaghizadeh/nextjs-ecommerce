@@ -75,7 +75,7 @@ const getItemsCount = () => {
             </Dropdown>
           :
           <Link href="/register">
-            <CiUser className="h-8 w-8 text-blue-500 font-bold"/>
+            <CiUser className="h-8 w-8 bg-blue-400 rounded-full m-2 p-1 text-white font-bold"/>
           </Link>
           }
         </NavbarItem>

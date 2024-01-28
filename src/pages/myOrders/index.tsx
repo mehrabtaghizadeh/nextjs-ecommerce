@@ -4,13 +4,17 @@ import Footer from "@/components/Footer"
 import Nav from "@/components/Nav"
 import BASE_URL from "@/utils/BASE_URL"
 import { order, CheckoutItem } from "@/types/types"
-
+import { BarLoader } from "react-spinners"
 function index() {
    const [orders,setOrders] = useState([])
+   const [isLoading,setIsLoading] = useState(false) 
    const {userId} = useContext(UserContext) as {userId: string}
    useEffect(()=>{
+    setIsLoading(true)
     fetch(`${BASE_URL}/auth/user/${userId}`).then(response => response.json())
-    .then(data => setOrders(data.orders))
+    .then(data => {
+      setIsLoading(false)
+      setOrders(data.orders)})
   },[userId])
       
 
@@ -20,9 +24,12 @@ function index() {
      <div className="max-h-screen">
 
        <h1 className="p-4 text-xl font-bold mr-8">صفحه سفارش‌های من</h1>
- 
-
- {orders ? orders.map((order:order) => (<div key={order._id} className="p-3 m-8 border rounded-md sm:p-6 border-gray-300">
+     {isLoading ?  
+     <div className="flex justify-center items-center max-h-screen">
+       <BarLoader color="#ffffff" />
+      </div>
+       :  ""}
+   {orders ? orders.map((order:order) => (<div key={order._id} className="p-3 m-8 border rounded-md sm:p-6 border-gray-300">
    <div className="flex max-sm:flex-col gap-2">
       {order.lineItems.map((item:CheckoutItem) => (
         <div className="flex flex-col gap-3">
@@ -50,7 +57,7 @@ function index() {
     {order.email}
     </p>
     <p>
-      جمع کل :{order.amount.toLocaleString('fa')}تومان
+      جمع کل :{order.amount.toLocaleString()}تومان
     </p>
      </div>  
   <ul
